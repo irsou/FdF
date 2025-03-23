@@ -1,33 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_map.c                                         :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isousa-s <isousa-s@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: isousa-s <isousa-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/22 20:39:09 by isousa-s          #+#    #+#             */
-/*   Updated: 2025/03/22 20:50:14 by isousa-s         ###   ########.fr       */
+/*   Created: 2024/11/30 09:24:55 by isousa-s          #+#    #+#             */
+/*   Updated: 2024/12/06 09:34:20 by isousa-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "libft.h"
 
-void	free_map(t_map *map)
+void	ft_bzero(void *ptr, size_t len)
 {
-	int		pos;
-
-	if (!map)
-		return ;
-	if (map->matrix)
-	{
-		pos = 0;
-		while (pos < (map->height))
-		{
-			if (map->matrix[pos])
-				free(map->matrix[pos]);
-			pos++;
-		}
-		free(map->matrix);
-	}
-	free(map);
+	ft_memset(ptr, 0, len);
 }
+/* erases the data in the n bytes of the memory starting at the location 
+pointed to by s, by writing zeros (bytes containing '\0') to that area*/

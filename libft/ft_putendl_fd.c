@@ -1,33 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_map.c                                         :+:      :+:    :+:   */
+/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isousa-s <isousa-s@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: isousa-s <isousa-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/22 20:39:09 by isousa-s          #+#    #+#             */
-/*   Updated: 2025/03/22 20:50:14 by isousa-s         ###   ########.fr       */
+/*   Created: 2024/12/12 20:53:38 by isousa-s          #+#    #+#             */
+/*   Updated: 2024/12/12 21:22:33 by isousa-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "libft.h"
 
-void	free_map(t_map *map)
+void	ft_putendl_fd(char *s, int fd)
 {
-	int		pos;
-
-	if (!map)
-		return ;
-	if (map->matrix)
-	{
-		pos = 0;
-		while (pos < (map->height))
-		{
-			if (map->matrix[pos])
-				free(map->matrix[pos]);
-			pos++;
-		}
-		free(map->matrix);
-	}
-	free(map);
+	ft_putstr_fd(s, fd);
+	ft_putchar_fd('\n', fd);
 }

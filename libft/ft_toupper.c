@@ -1,33 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_map.c                                         :+:      :+:    :+:   */
+/*   ft_toupper.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isousa-s <isousa-s@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: isousa-s <isousa-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/22 20:39:09 by isousa-s          #+#    #+#             */
-/*   Updated: 2025/03/22 20:50:14 by isousa-s         ###   ########.fr       */
+/*   Created: 2024/12/01 18:37:51 by marvin            #+#    #+#             */
+/*   Updated: 2024/12/06 13:26:28 by isousa-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
-
-void	free_map(t_map *map)
+int	ft_toupper(int c)
 {
-	int		pos;
-
-	if (!map)
-		return ;
-	if (map->matrix)
-	{
-		pos = 0;
-		while (pos < (map->height))
-		{
-			if (map->matrix[pos])
-				free(map->matrix[pos]);
-			pos++;
-		}
-		free(map->matrix);
-	}
-	free(map);
+	if (c >= 'a' && c <= 'z')
+		return (c - ('a' - 'A'));
+	return (c);
 }
+
+/* Converts lowercase letter to uppercase*/

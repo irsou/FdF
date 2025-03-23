@@ -1,33 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_map.c                                         :+:      :+:    :+:   */
+/*   ft_isalnum.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isousa-s <isousa-s@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: isousa-s <isousa-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/22 20:39:09 by isousa-s          #+#    #+#             */
-/*   Updated: 2025/03/22 20:50:14 by isousa-s         ###   ########.fr       */
+/*   Created: 2024/11/28 17:48:41 by isousa-s          #+#    #+#             */
+/*   Updated: 2024/12/06 13:25:43 by isousa-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "libft.h"
 
-void	free_map(t_map *map)
+int	ft_isalnum(int s)
 {
-	int		pos;
-
-	if (!map)
-		return ;
-	if (map->matrix)
-	{
-		pos = 0;
-		while (pos < (map->height))
-		{
-			if (map->matrix[pos])
-				free(map->matrix[pos]);
-			pos++;
-		}
-		free(map->matrix);
-	}
-	free(map);
+	if (ft_isalpha(s) || ft_isdigit(s))
+		return (1);
+	return (0);
 }
+/* Checks for an alphabetic character. If it.It's equivalent to 
+ft_isalpha(s) || ft_isdigit(s)*/

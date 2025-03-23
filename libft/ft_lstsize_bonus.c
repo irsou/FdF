@@ -1,33 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_map.c                                         :+:      :+:    :+:   */
+/*   ft_lstsize_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isousa-s <isousa-s@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: isousa-s <isousa-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/22 20:39:09 by isousa-s          #+#    #+#             */
-/*   Updated: 2025/03/22 20:50:14 by isousa-s         ###   ########.fr       */
+/*   Created: 2024/12/15 20:36:40 by isousa-s          #+#    #+#             */
+/*   Updated: 2024/12/18 19:32:36 by isousa-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "libft.h"
 
-void	free_map(t_map *map)
+/**
+ * @brief Returns the number of nodes of 'lst'
+ * 
+ * @param lst (t_list *)
+ * @return int 
+ */
+
+int	ft_lstsize(t_list *lst)
 {
-	int		pos;
+	int		number;
 
-	if (!map)
-		return ;
-	if (map->matrix)
+	number = 0;
+	while (lst != NULL)
 	{
-		pos = 0;
-		while (pos < (map->height))
-		{
-			if (map->matrix[pos])
-				free(map->matrix[pos]);
-			pos++;
-		}
-		free(map->matrix);
+		number++;
+		lst = lst->next;
 	}
-	free(map);
+	return (number);
 }

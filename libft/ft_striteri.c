@@ -1,33 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_map.c                                         :+:      :+:    :+:   */
+/*   ft_striteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isousa-s <isousa-s@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: isousa-s <isousa-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/22 20:39:09 by isousa-s          #+#    #+#             */
-/*   Updated: 2025/03/22 20:50:14 by isousa-s         ###   ########.fr       */
+/*   Created: 2024/12/12 20:22:20 by isousa-s          #+#    #+#             */
+/*   Updated: 2024/12/14 10:09:43 by isousa-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "libft.h"
 
-void	free_map(t_map *map)
+void	ft_striteri(char *s, void (*f)(unsigned int, char*))
 {
-	int		pos;
+	size_t	pos;
 
-	if (!map)
+	if (!s || !f)
 		return ;
-	if (map->matrix)
+	pos = 0;
+	while (s[pos] != '\0')
 	{
-		pos = 0;
-		while (pos < (map->height))
-		{
-			if (map->matrix[pos])
-				free(map->matrix[pos]);
-			pos++;
-		}
-		free(map->matrix);
+		f(pos, &s[pos]);
+		pos++;
 	}
-	free(map);
 }

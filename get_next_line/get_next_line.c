@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isousa-s <isousa-s@student.42.fr>          +#+  +:+       +#+        */
+/*   By: isousa-s <isousa-s@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 18:01:16 by isousa-s          #+#    #+#             */
-/*   Updated: 2025/02/02 15:19:53 by isousa-s         ###   ########.fr       */
+/*   Updated: 2025/03/23 09:47:19 by isousa-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static char	*read_and_join(int fd, char *storage, char *buffer)
 	int		bytes_read;
 
 	bytes_read = 1;
-	while ((!storage || !ft_strchr(storage, '\n')) && bytes_read > 0)
+	while ((!storage || !ft_gnl_strchr(storage, '\n')) && bytes_read > 0)
 	{
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
 		if (bytes_read == -1)
