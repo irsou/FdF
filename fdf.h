@@ -6,7 +6,7 @@
 /*   By: isousa-s <isousa-s@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 20:39:28 by isousa-s          #+#    #+#             */
-/*   Updated: 2025/03/22 22:20:27 by isousa-s         ###   ########.fr       */
+/*   Updated: 2025/03/23 10:05:03 by isousa-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,14 @@ typedef struct s_point
 	int		x;
 	int		y;
 	int		z;
-} t_point;
+}	t_point;
 
 typedef struct s_map
 {
-	t_point **matrix;
+	t_point	**matrix;
 	int		width;
 	int		height;
-} t_map;
+}	t_map;
 
 t_map	*parse_file(char *filename);
 void	free_map(t_map *map);

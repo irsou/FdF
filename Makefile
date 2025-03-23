@@ -16,24 +16,32 @@ RM = rm -f
 AR = ar rcs
 LIBFT_DIR = libft
 LIBFT = $(LIBFT_DIR)/libft.a
+MINILIBX_DIR = mlx
+LIBMLX = $(MINILIBX_DIR)/libmlx.a
 
-%.o: %.c push_swap.h
-	$(CC) $(FLAGS) -c $< -o $@
+%.o: %.c $(MINILIBX_DIR)/mlx.h
+	$(CC) $(FLAGS) -I$(MINILIBX_DIR) -c $< -o $@
 
-all: $(LIBFT) $(NAME)
+all: $(LIBFT) $(LIBMLX) $(NAME)
 
 $(LIBFT):
 	make -C $(LIBFT_DIR)
 
-$(NAME): $(OBJ) $(LIBFT)
-	$(CC) $(FLAGS) $(OBJ) -L$(LIBFT_DIR) -lft -o $(NAME) 
+$(LIBMLX):
+	make -C $(MINILIBX_DIR)
+
+$(NAME): $(OBJ) $(LIBFT) $(LIBMLX)
+	$(CC) $(FLAGS) $(OBJ) -L$(LIBFT_DIR) -lft -L$(MINILIBX_DIR) -lmlx -o $(NAME) 
 
 clean:
 	$(RM) $(OBJ)
+	make -C $(LIBFT_DIR) clean
+	make -C $(MINILIBX_DIR) clean
 
 fclean: clean
 	$(RM) $(NAME)
 	make -C $(LIBFT_DIR) fclean
+	make -C $(MINILIBX_DIR) clean
 
 re: fclean all
 
