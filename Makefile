@@ -36,7 +36,7 @@ $(LIBMLX):
 	make -C $(MINILIBX_DIR)
 
 $(NAME): $(OBJ) $(LIBFT) $(LIBMLX)
-	$(CC) $(FLAGS) $(OBJ) -L$(LIBFT_DIR) -lft -L$(MINILIBX_DIR) -lmlx -L$(X11_LIB) -lX11 -lXext -o $(NAME) 
+	$(CC) $(FLAGS) $(OBJ) -L$(LIBFT_DIR) -lft -L$(MINILIBX_DIR) -lmlx -L$(X11_LIB) -lX11 -lXext -lm -o $(NAME) 
 
 clean:
 	$(RM) $(OBJ)

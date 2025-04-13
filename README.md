@@ -5,7 +5,7 @@
 
 
 ## Aditional details
-mlx does not pass norminette, verify the rest of the files with:
+mlx does not pass norminette, you can verify the rest of the files with:
 find . -type f \( -name "*.c" -o -name "*.h" \) ! -path "./mlx/*" -exec norminette {} +
 
 
@@ -22,6 +22,7 @@ chmod +x mlx/*
 ## 🌐 Related links
 https://harm-smits.github.io/42docs/libs/minilibx.html
 https://github.com/42paris/minilibx-linux
+
 
 ##  🤝Contributions
 Contributions are welcome! Open an issue or submit a pull request to suggest improvements or fixes.
