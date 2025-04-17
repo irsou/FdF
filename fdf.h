@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isousa-s <isousa-s@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: isousa-s <isousa-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 20:39:28 by isousa-s          #+#    #+#             */
-/*   Updated: 2025/04/13 19:17:15 by isousa-s         ###   ########.fr       */
+/*   Updated: 2025/04/17 13:41:37 by isousa-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,9 @@ void	draw_line(t_img *img, t_point start, t_point end, int color, int width,
 void	my_mlx_pixel_put(t_img *img, int x, int y, int color, int width,
 			int height);
 void	render_frame(t_mlx *mlx);
+int		resize_handler(void *param);
+int		esc_press(int keycode, void *param);
+int		close_window(void *param);
+int		mouse_wheel(int mousecode, void *param);
 
 #endif

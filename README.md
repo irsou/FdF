@@ -22,6 +22,7 @@ chmod +x mlx/*
 ## 🌐 Related links
 https://harm-smits.github.io/42docs/libs/minilibx.html
 https://github.com/42paris/minilibx-linux
+https://github.com/goffauxs/fdf/tree/main/srcs
 
 
 ##  🤝Contributions

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_image.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isousa-s <isousa-s@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: isousa-s <isousa-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 21:49:41 by isousa-s          #+#    #+#             */
-/*   Updated: 2025/04/13 19:14:04 by isousa-s         ###   ########.fr       */
+/*   Updated: 2025/04/17 13:03:03 by isousa-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	my_mlx_pixel_put(t_img *img, int x, int y, int color, int width,
 {
 	char    *dst;
 
-	if (x < 0 || y < 0  || x >= width || y >= height)
+	if (x < 0 || y < 0 || x >= width || y >= height)
 		return;
 	dst = img->addr + (y * img->line_length + x * (img->bits_per_pixel / 8));
 	*(unsigned int*)dst = color;
@@ -68,7 +68,7 @@ void	clear_image(t_img *img, int color, int width, int height)
 void	create_image(t_mlx *mlx)
 {
 	mlx->img.img_ptr = mlx_new_image(mlx->mlx_ptr, mlx->win_width,
-																	mlx->win_height);
+										mlx->win_height);
 	mlx->img.addr = mlx_get_data_addr(mlx->img.img_ptr, 
 																	&mlx->img.bits_per_pixel, 
 																	&mlx->img.line_length, 
