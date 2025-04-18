@@ -18,6 +18,16 @@ Minilibx required
 chmod +x mlx/configure
 chmod +x mlx/*
 
+##  How to debug
+
+* gdb ./fdf
+* set args maps/julia.fdf
+* run
+
+* case error make[1]: ./configure: Permission denied:
+chmod +x mlx/configure
+chmod +x mlx/*
+
   
 ## 🌐 Related links
 https://harm-smits.github.io/42docs/libs/minilibx.html
