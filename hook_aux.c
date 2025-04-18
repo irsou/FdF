@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hook_aux.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isousa-s <isousa-s@student.42.fr>          +#+  +:+       +#+        */
+/*   By: isousa-s <isousa-s@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:23:19 by isousa-s          #+#    #+#             */
-/*   Updated: 2025/04/17 13:41:54 by isousa-s         ###   ########.fr       */
+/*   Updated: 2025/04/18 12:37:55 by isousa-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,18 +48,18 @@ int	resize_handler(void *param)
 	return (0);
 }
 
-int	mouse_wheel(int mousecode, void *param)
-{
-	t_mlx	*mlx;
+// int	mouse_wheel(int mousecode, void *param)
+// {
+// 	t_mlx	*mlx;
 
-	mlx = (t_mlx *)param;
-	if (mousecode == 4)
-	{
-		printf("mouse up\n");
-	}
-	if (mousecode == 5)
-	{
-		printf("mouse down\n");
-	}
-	return (0);
-}
+// 	mlx = (t_mlx *)param;
+// 	if (mousecode == 4)
+// 	{
+// 		printf("mouse up\n");
+// 	}
+// 	if (mousecode == 5)
+// 	{
+// 		printf("mouse down\n");
+// 	}
+// 	return (0);
+// }

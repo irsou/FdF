@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isousa-s <isousa-s@student.42.fr>          +#+  +:+       +#+        */
+/*   By: isousa-s <isousa-s@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 20:39:28 by isousa-s          #+#    #+#             */
-/*   Updated: 2025/04/17 13:41:37 by isousa-s         ###   ########.fr       */
+/*   Updated: 2025/04/18 12:35:13 by isousa-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef struct s_point
 	int		x;
 	int		y;
 	int		z;
+	int		color;
 }	t_point;
 
 typedef struct s_map
@@ -70,5 +71,6 @@ int		resize_handler(void *param);
 int		esc_press(int keycode, void *param);
 int		close_window(void *param);
 int		mouse_wheel(int mousecode, void *param);
+int		ft_hex_to_int(char *hex);
 
 #endif

@@ -10,6 +10,7 @@ create_image.c \
 get_next_line/get_next_line.c \
 get_next_line/get_next_line_utils.c \
 hook_aux.c \
+aux_functions.c \
 
 OBJ = $(SRC:.c=.o)
 
