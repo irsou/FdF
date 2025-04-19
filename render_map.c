@@ -5,31 +5,18 @@
 t_point	iso_convert(t_point p, t_mlx *mlx)
 {
 	t_point	iso;
-	int		scale;
 	int		offset_x;
 	int		offset_y;
 
-	scale = 20;
 	offset_x = mlx->win_width / 2;
 	offset_y = mlx->win_height / 4;
-	iso.x = (p.x - p.y) * cos(0.523599) * scale;
-	iso.y = (p.x + p.y) * sin(0.523599) * scale - p.z * scale / 2;
+	iso.x = (p.x - p.y) * cos(0.523599) * mlx->scale;
+	iso.y = (p.x + p.y) * sin(0.523599) * mlx->scale - p.z * mlx->scale / 2;
 	iso.z = p.z;
 	iso.x += offset_x;
 	iso.y += offset_y;
 	return (iso);
 }
-
-// int	get_color(int first, int second)
-// {
-// 	if (first == second == 0)
-// 		return (0xFFFFFF);
-// 	else if (first != second)
-// 		return (0xE74C3C);
-// 	else
-// 		return (0x0400F8);
-
-// }
 
 void	draw_wireframe(t_mlx *mlx)
 {
@@ -50,7 +37,8 @@ void	draw_wireframe(t_mlx *mlx)
 			current.y = y;
 			current.z = map->matrix[y][x].z;
 			current = iso_convert(current, mlx);
-			color = current.color;
+			//color = current.color;
+			color = 0xFFFFFF;
 			my_mlx_pixel_put(&mlx->img, current.x, current.y, color,
 				mlx->win_width, mlx->win_height);
 			if (x < map->width - 1)
@@ -99,6 +87,7 @@ void	render_map(t_map *map)
 	t_mlx	mlx;
 
 	mlx.mlx_ptr = mlx_init();
+	mlx.scale = 20;
 	mlx.win_width = 1500;
 	mlx.win_height = 1100;
 	mlx.win_ptr = mlx_new_window(mlx.mlx_ptr, mlx.win_width, mlx.win_height, "FdF");
@@ -120,6 +109,6 @@ void	render_map(t_map *map)
 	mlx_hook(mlx.win_ptr, 2, 1L << 0, esc_press, &mlx);
 	mlx_hook(mlx.win_ptr, 22, 1L << 17, resize_handler, &mlx);
 	mlx_hook(mlx.win_ptr, 17, 0, close_window, &mlx);
-	//mlx_mouse_hook(mlx.win_ptr, mouse_wheel, &mlx);
+	mlx_mouse_hook(mlx.win_ptr, mouse_wheel, &mlx);
 	mlx_loop(mlx.mlx_ptr);
 }
