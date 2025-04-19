@@ -84,23 +84,24 @@ void	render_frame(t_mlx *mlx)
 
 void	render_map(t_map *map)
 {
-	t_mlx	mlx;
+	static t_mlx	mlx;
+
 
 	mlx.mlx_ptr = mlx_init();
-	mlx.scale = 20;
-	mlx.win_width = 1500;
-	mlx.win_height = 1100;
-	mlx.win_ptr = mlx_new_window(mlx.mlx_ptr, mlx.win_width, mlx.win_height, "FdF");
 	if (!mlx.mlx_ptr)
 	{
 		perror("Error de MLX");
 		return ;
 	}
+
+	mlx.scale = 20;
+	mlx.win_width = 1500;
+	mlx.win_height = 1100;
+	mlx.win_ptr = mlx_new_window(mlx.mlx_ptr, mlx.win_width, mlx.win_height, "FdF");
 	if (!mlx.win_ptr)
 	{
 		perror("Error de ventana MLX");
 		mlx_destroy_display(mlx.mlx_ptr);
-		free(mlx.mlx_ptr);
 		return ;
 	}
 	mlx.map = map;
@@ -109,6 +110,8 @@ void	render_map(t_map *map)
 	mlx_hook(mlx.win_ptr, 2, 1L << 0, esc_press, &mlx);
 	mlx_hook(mlx.win_ptr, 22, 1L << 17, resize_handler, &mlx);
 	mlx_hook(mlx.win_ptr, 17, 0, close_window, &mlx);
-	mlx_mouse_hook(mlx.win_ptr, mouse_wheel, &mlx);
+	mlx_hook(mlx.win_ptr, 4, 1L<<2, mouse_up, &mlx);
+	mlx_hook(mlx.win_ptr, 5, 1L<<3, mouse_down, &mlx);
+	//mlx_mouse_hook(mlx.win_ptr, mouse_wheel, &mlx);
 	mlx_loop(mlx.mlx_ptr);
 }

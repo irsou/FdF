@@ -6,7 +6,7 @@
 /*   By: isousa-s <isousa-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 20:39:28 by isousa-s          #+#    #+#             */
-/*   Updated: 2025/04/19 11:03:58 by isousa-s         ###   ########.fr       */
+/*   Updated: 2025/04/19 12:09:02 by isousa-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ int		resize_handler(void *param);
 int		esc_press(int keycode, void *param);
 int		close_window(void *param);
 int		mouse_wheel(int mousecode, void *param);
+int		mouse_up(void *param);
+int		mouse_down(void *param);
 int		ft_hex_to_int(char *hex);
 
 #endif

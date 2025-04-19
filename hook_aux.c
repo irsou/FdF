@@ -6,7 +6,7 @@
 /*   By: isousa-s <isousa-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:23:19 by isousa-s          #+#    #+#             */
-/*   Updated: 2025/04/19 11:06:16 by isousa-s         ###   ########.fr       */
+/*   Updated: 2025/04/19 12:09:38 by isousa-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,69 @@ int	mouse_wheel(int mousecode, void *param)
 	t_mlx	*mlx;
 
 	mlx = (t_mlx *)param;
+	if (!mlx)
+    {
+        printf("Error: mlx es NULL\n");
+        return (0);
+    }
 	if (mousecode == 4)
 	{
 		printf("mouse up\n");
+		printf("%d\n", mlx->scale);
+		mlx->scale += 1;
+		printf("%d\n", mlx->scale);
+		render_frame(mlx);
+
 	}
 	if (mousecode == 5)
 	{
 		printf("mouse down\n");
 	}
 	return (0);
+	}
+
+	int	mouse_up(void *param)
+	{
+		t_mlx	*mlx;
+		
+		mlx = (t_mlx *)param;
+		if (!mlx)
+		{
+			printf("Error: mlx es NULL\n");
+			return (0);
+		}
+		if (!mlx->scale)
+		{
+			printf("Error: mlx.scale es NULL\n");
+			return (0);
+		}
+		else 
+		{
+			mlx->scale += 1;
+			render_frame(mlx);
+		}
+		return (0);
+	}
+
+	int	mouse_down(void *param)
+	{
+		t_mlx	*mlx;
+		
+		mlx = (t_mlx *)param;
+		if (!mlx)
+		{
+			printf("Error: mlx es NULL\n");
+			return (0);
+		}
+		if (!mlx->scale)
+		{
+			printf("Error: mlx.scale es NULL\n");
+			return (0);
+		}
+		else 
+		{
+			mlx->scale -= 1;
+			render_frame(mlx);
+		}
+		return (0);
 	}
