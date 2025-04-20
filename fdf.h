@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isousa-s <isousa-s@student.42.fr>          +#+  +:+       +#+        */
+/*   By: isousa-s <isousa-s@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 20:39:28 by isousa-s          #+#    #+#             */
-/*   Updated: 2025/04/19 12:09:02 by isousa-s         ###   ########.fr       */
+/*   Updated: 2025/04/20 17:14:03 by isousa-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ typedef struct s_mlx
 	t_img		img;
 	int			win_width;
 	int			win_height;
-	int			scale;
+	float		scale;
 }	t_mlx;
 
 t_map	*parse_file(char *filename);
@@ -71,9 +71,11 @@ void	render_frame(t_mlx *mlx);
 int		resize_handler(void *param);
 int		esc_press(int keycode, void *param);
 int		close_window(void *param);
-int		mouse_wheel(int mousecode, void *param);
-int		mouse_up(void *param);
-int		mouse_down(void *param);
+int mouse_wheel(int button, int x, int y, void *param);
+// int		mouse_up(void *param);
+// int		mouse_down(void *param);
+int mouse_up(int button, int x, int y, void *param);
+int mouse_down(int button, int x, int y, void *param);
 int		ft_hex_to_int(char *hex);
 
 #endif
