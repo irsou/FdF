@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hook_aux.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isousa-s <isousa-s@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: isousa-s <isousa-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:23:19 by isousa-s          #+#    #+#             */
-/*   Updated: 2025/04/20 17:20:15 by isousa-s         ###   ########.fr       */
+/*   Updated: 2025/04/21 12:42:39 by isousa-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,9 @@ int	resize_handler(void *param)
 	return (0);
 }
 
-int mouse_wheel(int button, int x, int y, void *param)
+int	mouse_wheel(int button, int x, int y, void *param)
 {
-	t_mlx *mlx;
+	t_mlx	*mlx;
 
 	(void)x;
 	(void)y;

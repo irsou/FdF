@@ -1,4 +1,14 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   render_map.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: isousa-s <isousa-s@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/17 12:23:19 by isousa-s          #+#    #+#             */
+/*   Updated: 2025/04/21 14:39:18 by isousa-s         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "fdf.h"
 
@@ -18,47 +28,42 @@ t_point	iso_convert(t_point p, t_mlx *mlx)
 	return (iso);
 }
 
+void	draw_line_between_points(t_draw *draw, int next_x, int next_y)
+{
+	t_point	next;
+
+	next.x = next_x;
+	next.y = next_y;
+	next.z = draw->map->matrix[next.y][next.x].z;
+	next = iso_convert(next, draw->mlx);
+
+	draw_line(draw->mlx, draw->current, next, draw->color);
+}
+
 void	draw_wireframe(t_mlx *mlx)
 {
 	int		x;
 	int		y;
-	int		color;
-	t_point	current, next, down;
-	t_map	*map;
+	t_draw	draw;
 
-	map = mlx->map;
+	draw.mlx = mlx;
+	draw.map = mlx->map;
+	draw.color = 0xFFFFFF;
 	y = 0;
-	while (y < map->height)
+	while (y < draw.map->height)
 	{
 		x = 0;
-		while (x < map->width)
+		while (x < draw.map->width)
 		{
-			current.x = x;
-			current.y = y;
-			current.z = map->matrix[y][x].z;
-			current = iso_convert(current, mlx);
-			//color = current.color;
-			color = 0xFFFFFF;
-			my_mlx_pixel_put(&mlx->img, current.x, current.y, color,
-				mlx->win_width, mlx->win_height);
-			if (x < map->width - 1)
-			{
-				next.x = x + 1;
-				next.y = y;
-				next.z = map->matrix[y][x + 1].z;
-				next = iso_convert(next, mlx);
-				draw_line(&mlx->img, current, next, color, mlx->win_width,
-					mlx->win_height);
-			}
-			if (y < map->height - 1)
-			{
-				down.x = x;
-				down.y = y + 1;
-				down.z = map->matrix[y + 1][x].z;
-				down = iso_convert(down, mlx);
-				draw_line(&mlx->img, current, down, 0xFFFFFF, mlx->win_width,
-					mlx->win_height);
-			}
+			draw.current.x = x;
+			draw.current.y = y;
+			draw.current.z = draw.map->matrix[y][x].z;
+			draw.current = iso_convert(draw.current, mlx);
+			my_mlx_pixel_put(mlx, draw.current.x, draw.current.y, draw.color);
+			if (x < draw.map->width - 1)
+				draw_line_between_points(&draw, x + 1, y);
+			if (y < draw.map->height - 1)
+				draw_line_between_points(&draw, x, y + 1);
 			x++;
 		}
 		y++;
@@ -82,10 +87,50 @@ void	render_frame(t_mlx *mlx)
 	mlx_put_image_to_window(mlx->mlx_ptr, mlx->win_ptr, mlx->img.img_ptr, 0, 0);
 }
 
-void	render_map(t_map *map)
+t_mlx	*init_mlx(t_map *map)
 {
 	static t_mlx	mlx;
 
+	mlx.mlx_ptr = mlx_init();
+	if (!mlx.mlx_ptr)
+	{
+		perror("Error de MLX");
+		return (NULL);
+	}
+	mlx.scale = 20;
+	mlx.win_width = 1500;
+	mlx.win_height = 1100;
+	mlx.win_ptr = mlx_new_window(mlx.mlx_ptr, mlx.win_width, mlx.win_height,
+			"FdF");
+	if (!mlx.win_ptr)
+	{
+		perror("Error de ventana MLX");
+		mlx_destroy_display(mlx.mlx_ptr);
+		return (NULL);
+	}
+	mlx.map = map;
+	mlx.img.img_ptr = NULL;
+	return (&mlx);
+}
+
+void	render_map(t_map *map)
+{
+	static t_mlx	*mlx;
+
+	mlx = init_mlx(map);
+	if (!mlx)
+		return ;
+	render_frame(mlx);
+	mlx_hook(mlx->win_ptr, 2, 1L << 0, esc_press, mlx);
+	mlx_hook(mlx->win_ptr, 22, 1L << 17, resize_handler, mlx);
+	mlx_hook(mlx->win_ptr, 17, 0, close_window, mlx);
+	mlx_mouse_hook(mlx->win_ptr, mouse_wheel, mlx);
+	mlx_loop(mlx->mlx_ptr);
+}
+
+/*void	render_map(t_map *map)
+{
+	static t_mlx	mlx;
 
 	mlx.mlx_ptr = mlx_init();
 	if (!mlx.mlx_ptr)
@@ -96,7 +141,8 @@ void	render_map(t_map *map)
 	mlx.scale = 20;
 	mlx.win_width = 1500;
 	mlx.win_height = 1100;
-	mlx.win_ptr = mlx_new_window(mlx.mlx_ptr, mlx.win_width, mlx.win_height, "FdF");
+	mlx.win_ptr = mlx_new_window(mlx.mlx_ptr, mlx.win_width, mlx.win_height,
+			"FdF");
 	if (!mlx.win_ptr)
 	{
 		perror("Error de ventana MLX");
@@ -109,8 +155,6 @@ void	render_map(t_map *map)
 	mlx_hook(mlx.win_ptr, 2, 1L << 0, esc_press, &mlx);
 	mlx_hook(mlx.win_ptr, 22, 1L << 17, resize_handler, &mlx);
 	mlx_hook(mlx.win_ptr, 17, 0, close_window, &mlx);
-	// mlx_hook(mlx.win_ptr, 4, 1L<<2, mouse_up, &mlx);
-	// mlx_hook(mlx.win_ptr, 5, 1L<<3, mouse_down, &mlx);
 	mlx_mouse_hook(mlx.win_ptr, mouse_wheel, &mlx);
 	mlx_loop(mlx.mlx_ptr);
-}
+}*/

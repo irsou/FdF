@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   print_map.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: isousa-s <isousa-s@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/01 21:49:41 by isousa-s          #+#    #+#             */
+/*   Updated: 2025/04/21 12:09:51 by isousa-s         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 
 #include <unistd.h>
 
-static void	print_number(int num)
+/*static void	print_number(int num)
 {
 	char	buffer[12];
 	int		len;
@@ -10,7 +22,7 @@ static void	print_number(int num)
 	if (num == -2147483648)
 	{
 		write(1, "-2147483648", 11);
-		return;
+		return ;
 	}
 	if (num < 0)
 	{
@@ -38,6 +50,59 @@ static void	print_number(int num)
 		end--;
 	}
 	write(1, buffer, len);
+}*/
+
+static int	fill_buffer(int num, char *buffer)
+{
+	int		len;
+
+	len = 0;
+	if (num == 0)
+		buffer[len++] = '0';
+	else
+	{
+		while (num > 0)
+		{
+			buffer[len++] = (num % 10) + '0';
+			num /= 10;
+		}
+	}
+	return (len);
+}
+
+static void	reverse_and_write(char *buffer, int len)
+{
+	int		start;
+	int		end;
+	char	tmp;
+
+	start = 0;
+	end = len - 1;
+	while (start < end)
+	{
+		tmp = buffer[start];
+		buffer[start] = buffer[end];
+		buffer[end] = tmp;
+		start++;
+		end--;
+	}
+	write(1, buffer, len);
+}
+
+static void	print_number(int num)
+{
+	char	buffer[12];
+	int		len;
+
+	if (num == -2147483648)
+		return (write(1, "-2147483648", 11), (void)0);
+	if (num < 0)
+	{
+		write(1, "-", 1);
+		num = -num;
+	}
+	len = fill_buffer(num, buffer);
+	reverse_and_write(buffer, len);
 }
 
 void	print_map(t_map *map)
@@ -48,15 +113,8 @@ void	print_map(t_map *map)
 	if (!map || !map->matrix)
 	{
 		write(1, "Error: Mapa vacío o nulo.\n", 26);
-		return;
+		return ;
 	}
-
-	// write(1, "Map dimensions: ", 16);
-	// print_number(map->width);
-	// write(1, "x", 1);
-	// print_number(map->height);
-	// write(1, "\n\n", 2);
-
 	i = 0;
 	while (i < map->height)
 	{

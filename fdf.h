@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isousa-s <isousa-s@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: isousa-s <isousa-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 20:39:28 by isousa-s          #+#    #+#             */
-/*   Updated: 2025/04/20 17:14:03 by isousa-s         ###   ########.fr       */
+/*   Updated: 2025/04/21 14:29:52 by isousa-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,26 +56,41 @@ typedef struct s_mlx
 	float		scale;
 }	t_mlx;
 
+typedef struct s_line
+{
+	t_point	start;
+	t_point	end;
+	int		color;
+	int		dx;
+	int		dy;
+	int		sx;
+	int		sy;
+	int		err;
+}	t_line;
+
+typedef struct s_draw
+{
+	t_mlx	*mlx;
+	t_map	*map;
+	t_point	current;
+	int		color;
+}	t_draw;
+
 t_map	*parse_file(char *filename);
 void	free_map(t_map *map);
 void	print_map(t_map *map); //borrar
 void	process_map(char *filename);
 void	render_map(t_map *map);
-void	clear_image(t_img *img, int color, int width, int height);
 void	create_image(t_mlx *mlx);
-void	draw_line(t_img *img, t_point start, t_point end, int color, int width,
-			int height);
-void	my_mlx_pixel_put(t_img *img, int x, int y, int color, int width,
-			int height);
+void	draw_line(t_mlx *mlx, t_point start, t_point end, int color);
+void	my_mlx_pixel_put(t_mlx *mlx, int x, int y, int color);
 void	render_frame(t_mlx *mlx);
 int		resize_handler(void *param);
 int		esc_press(int keycode, void *param);
 int		close_window(void *param);
-int mouse_wheel(int button, int x, int y, void *param);
-// int		mouse_up(void *param);
-// int		mouse_down(void *param);
-int mouse_up(int button, int x, int y, void *param);
-int mouse_down(int button, int x, int y, void *param);
+int		mouse_wheel(int button, int x, int y, void *param);
+int		mouse_up(int button, int x, int y, void *param);
+int		mouse_down(int button, int x, int y, void *param);
 int		ft_hex_to_int(char *hex);
 
 #endif

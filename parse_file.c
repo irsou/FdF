@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_file.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isousa-s <isousa-s@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: isousa-s <isousa-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 20:38:57 by isousa-s          #+#    #+#             */
-/*   Updated: 2025/04/18 15:59:04 by isousa-s         ###   ########.fr       */
+/*   Updated: 2025/04/21 14:38:35 by isousa-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ static int	calc_width(char *filename)
 		close(fd);
 		return (0);
 	}
-
 	while (line[pos_x])
 	{
 		while (line[pos_x] == ' ')
@@ -73,8 +72,7 @@ static int	calc_width(char *filename)
 			pos_x++;
 	}
 	close(fd);
-	printf("width: %d\n", width);
-  return (width);
+	return (width);
 }
 
 int	get_color(char *line)
@@ -104,13 +102,11 @@ static int	fill_points(t_map *map, char *filename)
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
 		return (0);
-
 	while (pos_x < map->height)
 	{
 		line = get_next_line(fd);
 		if (!line)
-			break;
-
+			break ;
 		pos_y = 0;
 		pos_z = 0;
 		while (line[pos_z] && pos_y < map->width)
@@ -135,46 +131,73 @@ static int	fill_points(t_map *map, char *filename)
 	return (1);
 }
 
-t_map	*parse_file(char *filename)
+void	free_matrix(t_map *map)
+{
+	int		pos;
+
+	pos = 0;
+	while (pos < map->height)
+	{
+		free(map->matrix[pos]);
+		pos++;
+	}
+	free(map->matrix);
+	free(map);
+}
+
+t_map	*init_map(char *filename)
 {
 	t_map	*map;
-	int		pos;
 
 	map = malloc(sizeof(t_map));
 	if (!map)
 		return (NULL);
 	map->height = calc_height(filename);
-	if (map->height == 0) {
-		free(map);
-		return (NULL);
-	}
 	map->width = calc_width(filename);
-	if (map->width == 0) {
+	if (map->height == 0 || map->width == 0)
+	{
 		free(map);
 		return (NULL);
 	}
+	return (map);
+}
+
+int	allocate_matrix(t_map *map)
+{
+	int	pos;
+
 	map->matrix = malloc(sizeof(t_point *) * map->height);
-	if (!map->matrix) {
+	if (!map->matrix)
+	{
 		free(map);
-		return (NULL);
+		return (0);
 	}
-	for (pos = 0; pos < map->height; pos++)
+	pos = 0;
+	while (pos < map->height)
 	{
 		map->matrix[pos] = malloc(sizeof(t_point) * map->width);
-		if (!map->matrix[pos]) {
-			while (pos > 0)
-				free(map->matrix[--pos]);
-			free(map->matrix);
-			free(map);
-			return (NULL);
+		if (!map->matrix[pos])
+		{
+			free_matrix(map);
+			return (0);
 		}
+		pos++;
 	}
+	return (1);
+}
+
+t_map	*parse_file(char *filename)
+{
+	t_map	*map;
+
+	map = init_map(filename);
+	if (!map)
+		return (NULL);
+	if (!allocate_matrix(map))
+		return (NULL);
 	if (!fill_points(map, filename))
 	{
-		for (pos = 0; pos < map->height; pos++)
-			free(map->matrix[pos]);
-		free(map->matrix);
-		free(map);
+		free_matrix(map);
 		return (NULL);
 	}
 	return (map);

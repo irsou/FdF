@@ -6,72 +6,73 @@
 /*   By: isousa-s <isousa-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 21:49:41 by isousa-s          #+#    #+#             */
-/*   Updated: 2025/04/17 13:03:03 by isousa-s         ###   ########.fr       */
+/*   Updated: 2025/04/21 12:09:51 by isousa-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	my_mlx_pixel_put(t_img *img, int x, int y, int color, int width,
-	int height)
+void	my_mlx_pixel_put(t_mlx *mlx, int x, int y, int color)
 {
-	char    *dst;
+	char	*dst;
 
-	if (x < 0 || y < 0 || x >= width || y >= height)
-		return;
-	dst = img->addr + (y * img->line_length + x * (img->bits_per_pixel / 8));
-	*(unsigned int*)dst = color;
+	if (x < 0 || y < 0 || x >= mlx->win_width || y >= mlx->win_height)
+		return ;
+	dst = mlx->img.addr + (y * mlx->img.line_length + x
+			*(mlx->img.bits_per_pixel / 8));
+	*(unsigned int *)dst = color;
 }
 
-void	draw_line(t_img *img, t_point start, t_point end, int color, int width,
-	int height)
+void	draw_line_loop(t_mlx *mlx, t_line *l)
 {
-	int dx = abs(end.x - start.x);
-	int dy = abs(end.y - start.y);
-	int sx = start.x < end.x ? 1 : -1;
-	int sy = start.y < end.y ? 1 : -1;
-	int err = (dx > dy ? dx : -dy) / 2;
-	
-	while (start.x != end.x || start.y != end.y) {
-			my_mlx_pixel_put(img, start.x, start.y, color, width, height);
-			int e2 = err;
-			
-			if (e2 > -dx) {
-					err -= dy;
-					start.x += sx;
-			}
-			if (e2 < dy) {
-					err += dx;
-					start.y += sy;
-			}
-	}
-	my_mlx_pixel_put(img, end.x, end.y, color, width, height);
-}
+	int		e2;
 
-void	clear_image(t_img *img, int color, int width, int height)
-{
-	int x, y;
-
-	y = 0;
-	while (y < height)
+	while (l->start.x != l->end.x || l->start.y != l->end.y)
 	{
-		x = 0;
-		while (x < width)
+		my_mlx_pixel_put(mlx, l->start.x, l->start.y, l->color);
+		e2 = l->err;
+		if (e2 > -l->dx)
 		{
-			my_mlx_pixel_put(img, x, y, color, width, height);
-			x++;
+			l->err -= l->dy;
+			l->start.x += l->sx;
 		}
-		y++;
+		if (e2 < l->dy)
+		{
+			l->err += l->dx;
+			l->start.y += l->sy;
+		}
 	}
+}
+
+void	draw_line(t_mlx *mlx, t_point start, t_point end, int color)
+{
+	t_line	line;
+
+	line.start = start;
+	line.end = end;
+	line.color = color;
+	line.dx = abs(end.x - start.x);
+	line.dy = abs(end.y - start.y);
+	if (start.x < end.x)
+		line.sx = 1;
+	else
+		line.sx = -1;
+	if (start.y < end.y)
+		line.sy = 1;
+	else
+		line.sy = -1;
+	if (line.dx > line.dy)
+		line.err = line.dx / 2;
+	else
+		line.err = -line.dy / 2;
+	draw_line_loop(mlx, &line);
+	my_mlx_pixel_put(mlx, line.end.x, line.end.y, color);
 }
 
 void	create_image(t_mlx *mlx)
 {
 	mlx->img.img_ptr = mlx_new_image(mlx->mlx_ptr, mlx->win_width,
-										mlx->win_height);
-	mlx->img.addr = mlx_get_data_addr(mlx->img.img_ptr, 
-																	&mlx->img.bits_per_pixel, 
-																	&mlx->img.line_length, 
-																	&mlx->img.endian);
+			mlx->win_height);
+	mlx->img.addr = mlx_get_data_addr(mlx->img.img_ptr,
+			&mlx->img.bits_per_pixel, &mlx->img.line_length, &mlx->img.endian);
 }
-

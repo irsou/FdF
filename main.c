@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isousa-s <isousa-s@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: isousa-s <isousa-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 20:39:06 by isousa-s          #+#    #+#             */
-/*   Updated: 2025/03/24 18:49:13 by isousa-s         ###   ########.fr       */
+/*   Updated: 2025/04/21 11:01:17 by isousa-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,4 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 	process_map(argv[1]);
-	
 }
