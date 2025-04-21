@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_file.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isousa-s <isousa-s@student.42.fr>          +#+  +:+       +#+        */
+/*   By: isousa-s <isousa-s@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 20:38:57 by isousa-s          #+#    #+#             */
-/*   Updated: 2025/04/21 14:38:35 by isousa-s         ###   ########.fr       */
+/*   Updated: 2025/04/21 18:44:40 by isousa-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ static int	calc_width(char *filename)
 		while (line[pos_x] && line[pos_x] != ' ')
 			pos_x++;
 	}
+	free(line);
 	close(fd);
 	return (width);
 }
