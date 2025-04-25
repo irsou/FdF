@@ -6,7 +6,7 @@
 /*   By: isousa-s <isousa-s@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 20:38:57 by isousa-s          #+#    #+#             */
-/*   Updated: 2025/04/21 18:44:40 by isousa-s         ###   ########.fr       */
+/*   Updated: 2025/04/24 12:42:09 by isousa-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	get_color(char *line)
 {
 	int	color;
 
-	color = 0xFFFFFF;
+	color = 0x24F9DC;
 	while (*line && *line != ' ' && *line != ',' && *line != '\n')
 		line++;
 	if (*line == ',')

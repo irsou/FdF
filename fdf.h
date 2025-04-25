@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isousa-s <isousa-s@student.42.fr>          +#+  +:+       +#+        */
+/*   By: isousa-s <isousa-s@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 20:39:28 by isousa-s          #+#    #+#             */
-/*   Updated: 2025/04/21 14:29:52 by isousa-s         ###   ########.fr       */
+/*   Updated: 2025/04/23 18:45:58 by isousa-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	print_map(t_map *map); //borrar
 void	process_map(char *filename);
 void	render_map(t_map *map);
 void	create_image(t_mlx *mlx);
-void	draw_line(t_mlx *mlx, t_point start, t_point end, int color);
+void	draw_line(t_mlx *mlx, t_point start, t_point end);
 void	my_mlx_pixel_put(t_mlx *mlx, int x, int y, int color);
 void	render_frame(t_mlx *mlx);
 int		resize_handler(void *param);

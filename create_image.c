@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_image.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isousa-s <isousa-s@student.42.fr>          +#+  +:+       +#+        */
+/*   By: isousa-s <isousa-s@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 21:49:41 by isousa-s          #+#    #+#             */
-/*   Updated: 2025/04/21 12:09:51 by isousa-s         ###   ########.fr       */
+/*   Updated: 2025/04/24 12:39:50 by isousa-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,34 +23,74 @@ void	my_mlx_pixel_put(t_mlx *mlx, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
+// void	draw_line_loop(t_mlx *mlx, t_line *l)
+// {
+// 	int		e2;
+
+// 	while (l->start.x != l->end.x || l->start.y != l->end.y)
+// 	{
+// 		my_mlx_pixel_put(mlx, l->start.x, l->start.y, l->color);
+// 		e2 = l->err;
+// 		if (e2 > -l->dx)
+// 		{
+// 			l->err -= l->dy;
+// 			l->start.x += l->sx;
+// 		}
+// 		if (e2 < l->dy)
+// 		{
+// 			l->err += l->dx;
+// 			l->start.y += l->sy;
+// 		}
+// 	}
+// }
+
 void	draw_line_loop(t_mlx *mlx, t_line *l)
 {
 	int		e2;
+	int		total_steps;
+	int		current_step;
+	int		color;
 
-	while (l->start.x != l->end.x || l->start.y != l->end.y)
-	{
-		my_mlx_pixel_put(mlx, l->start.x, l->start.y, l->color);
-		e2 = l->err;
-		if (e2 > -l->dx)
-		{
-			l->err -= l->dy;
-			l->start.x += l->sx;
-		}
-		if (e2 < l->dy)
-		{
-			l->err += l->dx;
-			l->start.y += l->sy;
-		}
-	}
+    // Calcular el número total de pasos que dará el algoritmo de Bresenham
+    total_steps = (l->dx > l->dy) ? l->dx : l->dy;
+    current_step = 0;
+
+    while (l->start.x != l->end.x || l->start.y != l->end.y)
+    {
+        // Si los colores son iguales, usar ese color
+        if (l->start.color == l->end.color)
+            color = l->start.color;
+        else
+        {
+            // Si son diferentes, decidir qué color usar basado en la posición actual
+            if (current_step < total_steps / 2)
+                color = l->start.color;
+            else
+                color = l->end.color;
+        }
+
+        my_mlx_pixel_put(mlx, l->start.x, l->start.y, color);
+        e2 = l->err;
+        if (e2 > -l->dx)
+        {
+            l->err -= l->dy;
+            l->start.x += l->sx;
+        }
+        if (e2 < l->dy)
+        {
+            l->err += l->dx;
+            l->start.y += l->sy;
+        }
+        current_step++;
+    }
 }
 
-void	draw_line(t_mlx *mlx, t_point start, t_point end, int color)
+void	draw_line(t_mlx *mlx, t_point start, t_point end)
 {
 	t_line	line;
 
 	line.start = start;
 	line.end = end;
-	line.color = color;
 	line.dx = abs(end.x - start.x);
 	line.dy = abs(end.y - start.y);
 	if (start.x < end.x)
@@ -66,7 +106,7 @@ void	draw_line(t_mlx *mlx, t_point start, t_point end, int color)
 	else
 		line.err = -line.dy / 2;
 	draw_line_loop(mlx, &line);
-	my_mlx_pixel_put(mlx, line.end.x, line.end.y, color);
+	my_mlx_pixel_put(mlx, line.end.x, line.end.y, end.color);
 }
 
 void	create_image(t_mlx *mlx)
