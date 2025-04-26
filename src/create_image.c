@@ -6,7 +6,7 @@
 /*   By: isousa-s <isousa-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 21:49:41 by isousa-s          #+#    #+#             */
-/*   Updated: 2025/04/26 10:18:17 by isousa-s         ###   ########.fr       */
+/*   Updated: 2025/04/26 12:16:58 by isousa-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,39 +23,61 @@ void	my_mlx_pixel_put(t_mlx *mlx, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-void	draw_line_loop(t_mlx *mlx, t_line *l)
+int	get_total_steps(t_line *l)
+{
+	if (l->dx > l->dy)
+		return (l->dx);
+	else
+		return (l->dy);
+}
+
+int	get_step_color(t_line *line, int step, int total_steps)
+{
+	if (step < total_steps / 2)
+		return (line->start.color);
+	else
+		return (line->end.color);
+}
+
+void	update_line_position(t_line *line)
 {
 	int		e2;
-	int		total_steps;
-	int		current_step;
+
+	e2 = line->err;
+	if (e2 > -line->dx)
+	{
+		line->err -= line->dy;
+		line->start.x += line->sx;
+	}
+	if (e2 < line->dy)
+	{
+		line->err += line->dx;
+		line->start.y += line->sy;
+	}
+}
+
+void	draw_line_step(t_mlx *mlx, t_line *line, int step, int total_steps)
+{
 	int		color;
 
-	total_steps = (l->dx > l->dy) ? l->dx : l->dy;
-	current_step = 0;
+	if (line->start.color == line->end.color)
+		color = line->start.color;
+	else
+		color = get_step_color(line, step, total_steps);
+	my_mlx_pixel_put(mlx, line->start.x, line->start.y, color);
+}
 
-	while (l->start.x != l->end.x || l->start.y != l->end.y)
+void	draw_line_loop(t_mlx *mlx, t_line *line)
+{
+	int		total_steps;
+	int		current_step;
+
+	total_steps = get_total_steps(line);
+	current_step = 0;
+	while (line->start.x != line->end.x || line->start.y != line->end.y)
 	{
-		if (l->start.color == l->end.color)
-			color = l->start.color;
-		else
-		{
-			if (current_step < total_steps / 2)
-				color = l->start.color;
-			else
-				color = l->end.color;
-		}
-		my_mlx_pixel_put(mlx, l->start.x, l->start.y, color);
-		e2 = l->err;
-		if (e2 > -l->dx)
-		{
-			l->err -= l->dy;
-			l->start.x += l->sx;
-		}
-		if (e2 < l->dy)
-		{
-			l->err += l->dx;
-			l->start.y += l->sy;
-		}
+		draw_line_step(mlx, line, current_step, total_steps);
+		update_line_position(line);
 		current_step++;
 	}
 }

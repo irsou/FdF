@@ -130,7 +130,6 @@
 // 	}
 // }
 
-
 void	print_map(t_map *map)
 {
 	int	i;
@@ -154,4 +153,3 @@ void	print_map(t_map *map)
 		i++;
 	}
 }
-

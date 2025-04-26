@@ -6,7 +6,7 @@
 /*   By: isousa-s <isousa-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:23:19 by isousa-s          #+#    #+#             */
-/*   Updated: 2025/04/26 10:07:44 by isousa-s         ###   ########.fr       */
+/*   Updated: 2025/04/26 12:06:48 by isousa-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,14 @@ int	close_window(void *param)
 	mlx = (t_mlx *)param;
 	if (mlx->img.img_ptr)
 		mlx_destroy_image(mlx->mlx_ptr, mlx->img.img_ptr);
-	mlx_destroy_image(mlx->mlx_ptr, mlx->win_ptr);
-	mlx_destroy_display(mlx->mlx_ptr);
-	free(mlx->mlx_ptr);
+	if (mlx->win_ptr)
+		mlx_destroy_window(mlx->mlx_ptr, mlx->win_ptr);
+	if (mlx->mlx_ptr)
+	{
+		mlx_destroy_display(mlx->mlx_ptr);
+		free(mlx->mlx_ptr);
+	}
 	exit(0);
-	return (0);
 }
 
 int	esc_press(int keycode, void *param)

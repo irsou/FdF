@@ -6,7 +6,7 @@
 /*   By: isousa-s <isousa-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 20:38:57 by isousa-s          #+#    #+#             */
-/*   Updated: 2025/04/26 10:07:44 by isousa-s         ###   ########.fr       */
+/*   Updated: 2025/04/26 12:29:23 by isousa-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,13 +91,13 @@ int	get_color(char *line)
 	return (color);
 }
 
-static int	fill_points(t_map *map, char *filename)
+/*static int	fill_points(t_map *map, char *filename)
 {
-	int			pos_x;
-	int			pos_y;
-	int			pos_z;
-	int			fd;
-	char		*line;
+	int		pos_x;
+	int		pos_y;
+	int		pos_z;
+	int		fd;
+	char	*line;
 
 	pos_x = 0;
 	fd = open(filename, O_RDONLY);
@@ -130,7 +130,54 @@ static int	fill_points(t_map *map, char *filename)
 	}
 	close(fd);
 	return (1);
+}*/
+
+static int	fill_point(t_point *point, char *line, int *pos_z, int pos_x, int pos_y)
+{
+	while (line[*pos_z] && line[*pos_z] == ' ')
+		(*pos_z)++;
+	if (line[*pos_z] && line[*pos_z] != '\n')
+	{
+		point->x = pos_y;
+		point->y = pos_x;
+		point->z = ft_atoi(&line[*pos_z]);
+		point->color = get_color(&line[*pos_z]);
+		while (line[*pos_z] && line[*pos_z] != ' ' && line[*pos_z] != '\n')
+			(*pos_z)++;
+		return (1);
+	}
+	return (0);
 }
+
+static int	fill_points(t_map *map, char *filename)
+{
+	int		pos_x;
+	int		pos_y;
+	int		pos_z;
+	int		fd;
+	char	*line;
+
+	fd = open(filename, O_RDONLY);
+	if (fd < 0)
+		return (0);
+	pos_x = 0;
+	while (pos_x < map->height && (line = get_next_line(fd)))
+	{
+		pos_y = 0;
+		pos_z = 0;
+		while (line[pos_z] && pos_y < map->width)
+		{
+			if (fill_point(&map->matrix[pos_x][pos_y], line, &pos_z, pos_x, pos_y))
+				pos_y++;
+		}
+		free(line);
+		pos_x++;
+	}
+	close(fd);
+	return (1);
+}
+
+
 
 void	free_matrix(t_map *map)
 {
