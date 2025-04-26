@@ -1,22 +1,24 @@
 NAME = fdf
 
-SRC = main.c \
-parse_file.c \
-print_map.c \
-free_map.c \
-process_map.c \
-render_map.c \
-create_image.c \
+INCLUDE_DIR = include
+
+SRC = src/main.c \
+src/parse_file.c \
+src/print_map.c \
+src/free_map.c \
+src/process_map.c \
+src/render_map.c \
+src/create_image.c \
 get_next_line/get_next_line.c \
 get_next_line/get_next_line_utils.c \
-hook_aux.c \
-aux_functions.c \
+src/hook_aux.c \
+src/aux_functions.c \
 
 OBJ = $(SRC:.c=.o)
 
 CC = cc
-FLAGS = -Wall -Werror -Wextra
-# FLAGS = -Wall -Werror -Wextra -g -fsanitize=address
+# FLAGS = -Wall -Werror -Wextra
+FLAGS = -Wall -Werror -Wextra -g -fsanitize=address
 RM = rm -f
 AR = ar rcs
 LIBFT_DIR = libft
@@ -26,8 +28,8 @@ LIBMLX = $(MINILIBX_DIR)/libmlx.a
 X11_INCLUDE = /usr/include
 X11_LIB = /usr/lib
 
-%.o: %.c $(MINILIBX_DIR)/mlx.h
-	$(CC) $(FLAGS) -I$(MINILIBX_DIR) -I$(X11_INCLUDE) -c $< -o $@
+%.o: src/%.c
+	$(CC) $(FLAGS) -I$(INCLUDE_DIR) -I$(MINILIBX_DIR) -I$(X11_INCLUDE) -c $< -o $@
 
 all: $(LIBFT) $(LIBMLX) $(NAME)
 
