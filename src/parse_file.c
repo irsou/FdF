@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_file.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isousa-s <isousa-s@student.42.fr>          +#+  +:+       +#+        */
+/*   By: isousa-s <isousa-s@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 20:38:57 by isousa-s          #+#    #+#             */
-/*   Updated: 2025/04/26 12:29:23 by isousa-s         ###   ########.fr       */
+/*   Updated: 2025/04/27 11:19:30 by isousa-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,29 @@ static int	calc_height(char *filename)
 	return (height);
 }
 
+static int	count_elements(char *line)
+{
+	int		width;
+	int		pos;
+
+	width = 0;
+	pos = 0;
+	while (line[pos])
+	{
+		while (line[pos] == ' ')
+			pos++;
+		if (line[pos] != '\0' && line[pos] != '\n')
+		{
+			width++;
+			while (line[pos] && line[pos] != ' ' && line[pos] != '\n')
+				pos++;
+		}
+		else
+			break ;
+	}
+	return (width);
+}
+
 static int	calc_width(char *filename)
 {
 	int		width;
@@ -62,15 +85,7 @@ static int	calc_width(char *filename)
 		close(fd);
 		return (0);
 	}
-	while (line[pos_x])
-	{
-		while (line[pos_x] == ' ')
-			pos_x++;
-		if (line[pos_x] != '\0' && line[pos_x] != '\n')
-			width++;
-		while (line[pos_x] && line[pos_x] != ' ')
-			pos_x++;
-	}
+	width = count_elements(line);
 	free(line);
 	close(fd);
 	return (width);
@@ -91,69 +106,39 @@ int	get_color(char *line)
 	return (color);
 }
 
-/*static int	fill_points(t_map *map, char *filename)
+static void	fill_point(t_map *map, int pos_x, int pos_y, char *line_segment)
 {
-	int		pos_x;
+	map->matrix[pos_x][pos_y].x = pos_y;
+	map->matrix[pos_x][pos_y].y = pos_x;
+	map->matrix[pos_x][pos_y].z = ft_atoi(line_segment);
+	map->matrix[pos_x][pos_y].color = get_color(line_segment);
+}
+
+static int	process_line(t_map *map, char *line, int pos_x)
+{
 	int		pos_y;
 	int		pos_z;
-	int		fd;
-	char	*line;
 
-	pos_x = 0;
-	fd = open(filename, O_RDONLY);
-	if (fd < 0)
-		return (0);
-	while (pos_x < map->height)
+	pos_y = 0;
+	pos_z = 0;
+	while (line[pos_z] && pos_y < map->width)
 	{
-		line = get_next_line(fd);
-		if (!line)
-			break ;
-		pos_y = 0;
-		pos_z = 0;
-		while (line[pos_z] && pos_y < map->width)
+		while (line[pos_z] && line[pos_z] == ' ')
+			pos_z++;
+		if (line[pos_z] && line[pos_z] != '\n')
 		{
-			while (line[pos_z] && line[pos_z] == ' ')
+			fill_point(map, pos_x, pos_y, &line[pos_z]);
+			while (line[pos_z] && line[pos_z] != ' ' && line[pos_z] != '\n')
 				pos_z++;
-			if (line[pos_z] && line[pos_z] != '\n')
-			{
-				map->matrix[pos_x][pos_y].x = pos_y;
-				map->matrix[pos_x][pos_y].y = pos_x;
-				map->matrix[pos_x][pos_y].z = ft_atoi(&line[pos_z]);
-				map->matrix[pos_x][pos_y].color = get_color(&line[pos_z]);
-				while (line[pos_z] && line[pos_z] != ' ' && line[pos_z] != '\n')
-					pos_z++;
-				pos_y++;
-			}
+			pos_y++;
 		}
-		free(line);
-		pos_x++;
 	}
-	close(fd);
 	return (1);
-}*/
-
-static int	fill_point(t_point *point, char *line, int *pos_z, int pos_x, int pos_y)
-{
-	while (line[*pos_z] && line[*pos_z] == ' ')
-		(*pos_z)++;
-	if (line[*pos_z] && line[*pos_z] != '\n')
-	{
-		point->x = pos_y;
-		point->y = pos_x;
-		point->z = ft_atoi(&line[*pos_z]);
-		point->color = get_color(&line[*pos_z]);
-		while (line[*pos_z] && line[*pos_z] != ' ' && line[*pos_z] != '\n')
-			(*pos_z)++;
-		return (1);
-	}
-	return (0);
 }
 
 static int	fill_points(t_map *map, char *filename)
 {
 	int		pos_x;
-	int		pos_y;
-	int		pos_z;
 	int		fd;
 	char	*line;
 
@@ -161,23 +146,18 @@ static int	fill_points(t_map *map, char *filename)
 	if (fd < 0)
 		return (0);
 	pos_x = 0;
-	while (pos_x < map->height && (line = get_next_line(fd)))
+	while (pos_x < map->height)
 	{
-		pos_y = 0;
-		pos_z = 0;
-		while (line[pos_z] && pos_y < map->width)
-		{
-			if (fill_point(&map->matrix[pos_x][pos_y], line, &pos_z, pos_x, pos_y))
-				pos_y++;
-		}
+		line = get_next_line(fd);
+		if (!line)
+			break ;
+		process_line(map, line, pos_x);
 		free(line);
 		pos_x++;
 	}
 	close(fd);
 	return (1);
 }
-
-
 
 void	free_matrix(t_map *map)
 {

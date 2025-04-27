@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_map.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isousa-s <isousa-s@student.42.fr>          +#+  +:+       +#+        */
+/*   By: isousa-s <isousa-s@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:23:19 by isousa-s          #+#    #+#             */
-/*   Updated: 2025/04/26 12:17:21 by isousa-s         ###   ########.fr       */
+/*   Updated: 2025/04/27 09:23:45 by isousa-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,30 @@ void	draw_line_between_points(t_draw *draw, int next_x, int next_y)
 	draw_line(draw->mlx, draw->current, next);
 }
 
+static void	set_current_point(t_draw *draw, int x, int y, t_mlx *mlx)
+{
+	draw->current.x = x;
+	draw->current.y = y;
+	draw->current.z = draw->map->matrix[y][x].z;
+	draw->current.color = draw->map->matrix[y][x].color;
+	draw->current = iso_convert(draw->current, mlx);
+	my_mlx_pixel_put(mlx, draw->current.x, draw->current.y,
+		draw->current.color);
+}
+
+static void	draw_adjacent_lines(t_draw *draw, int x, int y)
+{
+	if (x < draw->map->width - 1)
+		draw_line_between_points(draw, x + 1, y);
+	if (y < draw->map->height - 1)
+		draw_line_between_points(draw, x, y + 1);
+}
+
 void	draw_wireframe(t_mlx *mlx)
 {
+	t_draw	draw;
 	int		x;
 	int		y;
-	t_draw	draw;
 
 	draw.mlx = mlx;
 	draw.map = mlx->map;
@@ -56,17 +75,8 @@ void	draw_wireframe(t_mlx *mlx)
 		x = 0;
 		while (x < draw.map->width)
 		{
-			draw.current.x = x;
-			draw.current.y = y;
-			draw.current.z = draw.map->matrix[y][x].z;
-			draw.current.color = draw.map->matrix[y][x].color;
-			draw.current = iso_convert(draw.current, mlx);
-			my_mlx_pixel_put(mlx, draw.current.x, draw.current.y,
-				draw.current.color);
-			if (x < draw.map->width - 1)
-				draw_line_between_points(&draw, x + 1, y);
-			if (y < draw.map->height - 1)
-				draw_line_between_points(&draw, x, y + 1);
+			set_current_point(&draw, x, y, mlx);
+			draw_adjacent_lines(&draw, x, y);
 			x++;
 		}
 		y++;
@@ -99,8 +109,8 @@ t_mlx	*init_mlx(t_map *map)
 		return (NULL);
 	}
 	mlx.scale = 20;
-	mlx.win_width = 1920;
-	mlx.win_height = 1080;
+	mlx.win_width = 800;
+	mlx.win_height = 600;
 	mlx.win_ptr = mlx_new_window(mlx.mlx_ptr, mlx.win_width, mlx.win_height,
 			"FdF");
 	if (!mlx.win_ptr)

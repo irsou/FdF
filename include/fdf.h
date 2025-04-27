@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isousa-s <isousa-s@student.42.fr>          +#+  +:+       +#+        */
+/*   By: isousa-s <isousa-s@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 20:39:28 by isousa-s          #+#    #+#             */
-/*   Updated: 2025/04/26 09:56:25 by isousa-s         ###   ########.fr       */
+/*   Updated: 2025/04/26 21:33:16 by isousa-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,13 @@ typedef struct s_draw
 	t_point	current;
 	int		color;
 }	t_draw;
+
+typedef struct s_fill_points_pos
+{
+	int		x;
+	int		y;
+	int		z;
+}	t_fill_points_pos;
 
 t_map	*parse_file(char *filename);
 void	free_map(t_map *map);
