@@ -6,7 +6,7 @@
 /*   By: isousa-s <isousa-s@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 20:39:28 by isousa-s          #+#    #+#             */
-/*   Updated: 2025/04/26 21:33:16 by isousa-s         ###   ########.fr       */
+/*   Updated: 2025/05/02 22:13:05 by isousa-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ typedef struct s_mlx
 	int			win_width;
 	int			win_height;
 	float		scale;
+	int			offset_x_step;
+	int			offset_y_step;
 }	t_mlx;
 
 typedef struct s_line
@@ -93,9 +95,9 @@ void	draw_line(t_mlx *mlx, t_point start, t_point end);
 void	my_mlx_pixel_put(t_mlx *mlx, int x, int y, int color);
 void	render_frame(t_mlx *mlx);
 int		resize_handler(void *param);
-int		esc_press(int keycode, void *param);
 int		close_window(void *param);
 int		mouse_wheel(int button, int x, int y, void *param);
 int		ft_hex_to_int(char *hex);
+int		key_press(int keycode, void *param);
 
 #endif

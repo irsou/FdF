@@ -6,7 +6,7 @@
 /*   By: isousa-s <isousa-s@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:23:19 by isousa-s          #+#    #+#             */
-/*   Updated: 2025/05/02 13:06:39 by isousa-s         ###   ########.fr       */
+/*   Updated: 2025/05/02 22:28:31 by isousa-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ t_point	iso_convert(t_point p, t_mlx *mlx)
 	int		offset_x;
 	int		offset_y;
 
-	offset_x = mlx->win_width / 2;
-	offset_y = mlx->win_height / 4;
+	offset_x = mlx->win_width / (2 + mlx->offset_x_step);
+	offset_y = mlx->win_height / (4 + mlx->offset_y_step);
 	iso.x = (p.x - p.y) * cos(0.523599) * mlx->scale;
 	iso.y = (p.x + p.y) * sin(0.523599) * mlx->scale - p.z * mlx->scale / 2;
 	iso.z = p.z;
@@ -111,6 +111,8 @@ t_mlx	*init_mlx(t_map *map)
 	mlx.scale = 20;
 	mlx.win_width = 800;
 	mlx.win_height = 600;
+	mlx.offset_x_step = 0;
+	mlx.offset_y_step = 0;
 	mlx.win_ptr = mlx_new_window(mlx.mlx_ptr, mlx.win_width, mlx.win_height,
 			"FdF");
 	if (!mlx.win_ptr)
@@ -132,7 +134,7 @@ void	render_map(t_map *map)
 	if (!mlx)
 		return ;
 	render_frame(mlx);
-	mlx_hook(mlx->win_ptr, 2, 1L << 0, esc_press, mlx);
+	mlx_hook(mlx->win_ptr, 2, 1L << 0, key_press, mlx);
 	mlx_hook(mlx->win_ptr, 22, 1L << 17, resize_handler, mlx);
 	mlx_hook(mlx->win_ptr, 17, 0, close_window, mlx);
 	mlx_mouse_hook(mlx->win_ptr, mouse_wheel, mlx);

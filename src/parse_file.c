@@ -6,7 +6,7 @@
 /*   By: isousa-s <isousa-s@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 20:38:57 by isousa-s          #+#    #+#             */
-/*   Updated: 2025/05/02 16:58:35 by isousa-s         ###   ########.fr       */
+/*   Updated: 2025/05/02 22:28:22 by isousa-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,61 +122,21 @@ static void	fill_empty_point(t_map *map, int x, int y)
 	map->matrix[x][y].color = 0x24F9DC;
 }
 
-// static int	process_line(t_map *map, char *line, int pos_x)
-// {
-// 	int		pos_y;
-// 	int		pos_z;
-// 	int		warning;
-
-// 	pos_y = 0;
-// 	pos_z = 0;
-// 	warning = 0;
-// 	while (line[pos_z])
-// 	{
-// 		while (line[pos_z] && line[pos_z] == ' ')
-// 			pos_z++;
-// 		if (line[pos_z] && line[pos_z] != '\n')
-// 		{
-// 			if (pos_y < map->width)
-// 				process_point(map, pos_x, pos_y, &line[pos_z]);
-// 			else if (!warning)
-// 			{
-// 				write(2, 
-// 					"Line has more elements than expected. Extra elements ignored.\n", 63);
-// 				warning = 1;
-// 			}
-// 			while (line[pos_z] && line[pos_z] != ' ' && line[pos_z] != '\n')
-// 				pos_z++;
-// 			pos_y++;
-// 		}
-// 		else
-// 			break ;
-// 	}
-// 	if (pos_y < map->width)
-// 	{
-// 		write(2, 
-// 			"Line has fewer elements than expected. Filling with zeros.\n", 60);
-// 		while (pos_y < map->width)
-// 		{
-// 			fill_empty_point(map, pos_x, pos_y);
-// 			pos_y++;
-// 		}
-// 	}
-// 	return (1);
-// }
-
-static void		handle_extra_elements(int *warning)
+static void	handle_extra_elements(int *warning)
 {
 	if (!(*warning))
 	{
-		write(2, "Line has more elements than expected. Extra elements ignored.\n", 63);
+		write(2,
+			"Line has more elements than expected. Extra elements ignored.\n",
+			63);
 		*warning = 1;
 	}
 }
 
-static void		fill_remaining_points(t_map *map, int pos_x, int *pos_y)
+static void	fill_remaining_points(t_map *map, int pos_x, int *pos_y)
 {
-	write(2, "Line has fewer elements than expected. Filling with zeros.\n", 60);
+	write(2,
+		"Line has fewer elements than expected. Filling with zeros.\n", 60);
 	while (*pos_y < map->width)
 	{
 		fill_empty_point(map, pos_x, *pos_y);
@@ -184,7 +144,7 @@ static void		fill_remaining_points(t_map *map, int pos_x, int *pos_y)
 	}
 }
 
-static void		process_line_elements(t_map *map, char *line, int pos_x, int *pos_y)
+static void	process_line_elements(t_map *map, char *line, int pos_x, int *pos_y)
 {
 	int		pos_z;
 	int		warning;
@@ -260,6 +220,7 @@ void	free_matrix(t_map *map)
 t_map	*init_map(char *filename)
 {
 	t_map	*map;
+
 	map = malloc(sizeof(t_map));
 	if (!map)
 		return (NULL);
