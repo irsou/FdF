@@ -22,7 +22,6 @@ void	process_map(char *filename)
 		perror("File couldn't be read.");
 		return ;
 	}
-	print_map(map); //borrar
 	render_map(map);
 	free_map(map);
 }
