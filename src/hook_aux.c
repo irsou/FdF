@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hook_aux.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isousa-s <isousa-s@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: isousa-s <isousa-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:23:19 by isousa-s          #+#    #+#             */
-/*   Updated: 2025/05/02 22:29:47 by isousa-s         ###   ########.fr       */
+/*   Updated: 2025/05/03 09:22:28 by isousa-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,20 @@ int	arrow_press(int keycode, void *param)
 
 	mlx = (t_mlx *)param;
 	step = 1;
-	if (keycode == 65361)
-		mlx->offset_x_step -= step;
-	else if (keycode == 65363)
-		mlx->offset_x_step += step;
-	else if (keycode == 65362)
-		mlx->offset_y_step -= step;
-	else if (keycode == 65364)
-		mlx->offset_y_step += step;
-	else
-		return (0);
+	if (mlx->offset_x_step > -((mlx->map->width * mlx->scale) / 2))
+	{
+		if (keycode == 65361)
+			mlx->offset_x_step -= step;
+		else if (keycode == 65362)
+			mlx->offset_y_step -= step;
+	}
+	else if (mlx->offset_y_step > -((mlx->map->height * mlx->scale) / 2))
+	{
+		if (keycode == 65364)
+			mlx->offset_y_step += step;
+		else if (keycode == 65363)
+			mlx->offset_x_step += step;
+	}
 	render_frame(mlx);
 	return (0);
 }
