@@ -6,7 +6,7 @@
 /*   By: isousa-s <isousa-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:23:19 by isousa-s          #+#    #+#             */
-/*   Updated: 2025/05/03 09:06:27 by isousa-s         ###   ########.fr       */
+/*   Updated: 2025/05/03 09:58:47 by isousa-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ t_point	iso_convert(t_point p, t_mlx *mlx)
 	int		offset_x;
 	int		offset_y;
 
-	offset_x = mlx->win_width / (2 + mlx->offset_x_step);
-	offset_y = mlx->win_height / (4 + mlx->offset_y_step);
+	offset_x = (mlx->win_width / 2) + mlx->offset_x_step;
+	offset_y = (mlx->win_height / 4) + mlx->offset_y_step;
 	iso.x = (p.x - p.y) * cos(0.523599) * mlx->scale;
 	iso.y = (p.x + p.y) * sin(0.523599) * mlx->scale - p.z * mlx->scale / 2;
 	iso.z = p.z;

@@ -6,7 +6,7 @@
 /*   By: isousa-s <isousa-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:23:19 by isousa-s          #+#    #+#             */
-/*   Updated: 2025/05/03 09:22:28 by isousa-s         ###   ########.fr       */
+/*   Updated: 2025/05/03 10:11:15 by isousa-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,23 +33,23 @@ int	arrow_press(int keycode, void *param)
 {
 	t_mlx	*mlx;
 	int		step;
+	int		max_x;
+	int		max_y;
 
 	mlx = (t_mlx *)param;
-	step = 1;
-	if (mlx->offset_x_step > -((mlx->map->width * mlx->scale) / 2))
-	{
-		if (keycode == 65361)
-			mlx->offset_x_step -= step;
-		else if (keycode == 65362)
-			mlx->offset_y_step -= step;
-	}
-	else if (mlx->offset_y_step > -((mlx->map->height * mlx->scale) / 2))
-	{
-		if (keycode == 65364)
-			mlx->offset_y_step += step;
-		else if (keycode == 65363)
-			mlx->offset_x_step += step;
-	}
+	step = (100.0 / mlx->scale);
+	if (!mlx || !mlx->map)
+		return (1);
+	max_x = (mlx->map->width * mlx->scale) / 2;
+	max_y = (mlx->map->height * mlx->scale) / 2;
+	if (keycode == 65361 && mlx->offset_x_step > -max_x)
+		mlx->offset_x_step -= step;
+	else if (keycode == 65363 && mlx->offset_x_step < max_x)
+		mlx->offset_x_step += step;
+	else if (keycode == 65362 && mlx->offset_y_step > -max_y)
+		mlx->offset_y_step -= step;
+	else if (keycode == 65364 && mlx->offset_y_step < max_y)
+		mlx->offset_y_step += step;
 	render_frame(mlx);
 	return (0);
 }

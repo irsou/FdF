@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isousa-s <isousa-s@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: isousa-s <isousa-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 20:39:28 by isousa-s          #+#    #+#             */
-/*   Updated: 2025/05/02 22:13:05 by isousa-s         ###   ########.fr       */
+/*   Updated: 2025/05/03 10:13:24 by isousa-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,5 +99,6 @@ int		close_window(void *param);
 int		mouse_wheel(int button, int x, int y, void *param);
 int		ft_hex_to_int(char *hex);
 int		key_press(int keycode, void *param);
+int		count_elements(char *line);
 
 #endif

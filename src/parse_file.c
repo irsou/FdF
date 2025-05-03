@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_file.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isousa-s <isousa-s@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: isousa-s <isousa-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 20:38:57 by isousa-s          #+#    #+#             */
-/*   Updated: 2025/05/02 22:28:22 by isousa-s         ###   ########.fr       */
+/*   Updated: 2025/05/03 10:13:30 by isousa-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,29 +44,6 @@ static int	calc_height(char *filename)
 	close(fd);
 	printf("height: %d\n", height);
 	return (height);
-}
-
-static int	count_elements(char *line)
-{
-	int		width;
-	int		pos;
-
-	width = 0;
-	pos = 0;
-	while (line[pos])
-	{
-		while (line[pos] == ' ')
-			pos++;
-		if (line[pos] != '\0' && line[pos] != '\n')
-		{
-			width++;
-			while (line[pos] && line[pos] != ' ' && line[pos] != '\n')
-				pos++;
-		}
-		else
-			break ;
-	}
-	return (width);
 }
 
 static int	calc_width(char *filename)
