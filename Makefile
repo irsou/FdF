@@ -42,17 +42,17 @@ HEADERS = $(INCLUDE_DIR)/*.h
 %.o: %.c $(HEADERS)
 	$(CC) $(FLAGS) -I$(INCLUDE_DIR) -I$(MINILIBX_DIR) -I$(X11_INCLUDE) -c $< -o $@
 
-all: $(NAME)
+all: $(LIBFT) $(LIBMLX) $(NAME)
+
+$(NAME): $(OBJ)
+	$(CC) $(FLAGS) $(OBJ) -L$(LIBFT_DIR) -lft -L$(MINILIBX_DIR) -lmlx -L$(X11_LIB) -lX11 -lXext -lm -o $(NAME)
 
 $(LIBFT):
 	@$(MAKE) -C $(LIBFT_DIR)
 
 $(LIBMLX):
 	@$(MAKE) -C $(MINILIBX_DIR)
-
-$(NAME): $(OBJ) $(LIBFT) $(LIBMLX)
-	$(CC) $(FLAGS) $(OBJ) -L$(LIBFT_DIR) -lft -L$(MINILIBX_DIR) -lmlx -L$(X11_LIB) -lX11 -lXext -lm -o $(NAME) 
-
+	
 clean:
 	$(RM) $(OBJ)
 	@$(MAKE) -C $(LIBFT_DIR) clean
