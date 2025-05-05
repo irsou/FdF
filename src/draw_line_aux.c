@@ -1,21 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create_image.c                                     :+:      :+:    :+:   */
+/*   draw_line_aux.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: isousa-s <isousa-s@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/01 21:49:41 by isousa-s          #+#    #+#             */
-/*   Updated: 2025/05/05 21:13:24 by isousa-s         ###   ########.fr       */
+/*   Created: 2025/05/05 21:19:55 by isousa-s          #+#    #+#             */
+/*   Updated: 2025/05/05 21:20:13 by isousa-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/fdf.h"
 
-void	create_image(t_mlx *mlx)
+int	get_step_color(t_line *line, int step, int total_steps)
 {
-	mlx->img.img_ptr = mlx_new_image(mlx->mlx_ptr, mlx->win_width,
-			mlx->win_height);
-	mlx->img.addr = mlx_get_data_addr(mlx->img.img_ptr,
-			&mlx->img.bits_per_pixel, &mlx->img.line_length, &mlx->img.endian);
+	if (step < total_steps / 2)
+		return (line->start.color);
+	else
+		return (line->end.color);
+}
+
+void	pixel_put(t_mlx *mlx, int x, int y, int color)
+{
+	char	*dst;
+
+	if (x < 0 || y < 0 || x >= mlx->win_width || y >= mlx->win_height)
+		return ;
+	dst = mlx->img.addr + (y * mlx->img.line_length + x
+			*(mlx->img.bits_per_pixel / 8));
+	*(unsigned int *)dst = color;
 }

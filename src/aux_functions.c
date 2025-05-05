@@ -33,26 +33,3 @@ int	ft_hex_to_int(char *hex)
 	}
 	return (value);
 }
-
-int	count_elements(char *line)
-{
-	int		width;
-	int		pos;
-
-	width = 0;
-	pos = 0;
-	while (line[pos])
-	{
-		while (line[pos] == ' ')
-			pos++;
-		if (line[pos] != '\0' && line[pos] != '\n')
-		{
-			width++;
-			while (line[pos] && line[pos] != ' ' && line[pos] != '\n')
-				pos++;
-		}
-		else
-			break ;
-	}
-	return (width);
-}

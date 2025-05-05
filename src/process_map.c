@@ -16,7 +16,7 @@ void	process_map(char *filename)
 {
 	t_map	*map;
 
-	map = parse_file(filename);
+	map = read_map(filename);
 	if (!map)
 	{
 		perror("File couldn't be read.");

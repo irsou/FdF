@@ -1,33 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hook_aux.c                                         :+:      :+:    :+:   */
+/*   hook_interact.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isousa-s <isousa-s@student.42.fr>          +#+  +:+       +#+        */
+/*   By: isousa-s <isousa-s@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/17 12:23:19 by isousa-s          #+#    #+#             */
-/*   Updated: 2025/05/03 10:11:15 by isousa-s         ###   ########.fr       */
+/*   Created: 2025/05/05 21:28:32 by isousa-s          #+#    #+#             */
+/*   Updated: 2025/05/05 23:04:31 by isousa-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/fdf.h"
-
-int	close_window(void *param)
-{
-	t_mlx	*mlx;
-
-	mlx = (t_mlx *)param;
-	if (mlx->img.img_ptr)
-		mlx_destroy_image(mlx->mlx_ptr, mlx->img.img_ptr);
-	if (mlx->win_ptr)
-		mlx_destroy_window(mlx->mlx_ptr, mlx->win_ptr);
-	if (mlx->mlx_ptr)
-	{
-		mlx_destroy_display(mlx->mlx_ptr);
-		free(mlx->mlx_ptr);
-	}
-	exit(0);
-}
 
 int	arrow_press(int keycode, void *param)
 {
@@ -54,26 +37,8 @@ int	arrow_press(int keycode, void *param)
 	return (0);
 }
 
-int	esc_press(int keycode, void *param)
-{
-	t_mlx	*mlx;
-
-	mlx = (t_mlx *)param;
-	if (keycode == 65307)
-	{
-		mlx_destroy_window(mlx->mlx_ptr, mlx->win_ptr);
-		mlx_destroy_display(mlx->mlx_ptr);
-		free(mlx->mlx_ptr);
-		exit(0);
-	}
-	return (0);
-}
-
 int	key_press(int keycode, void *param)
 {
-	t_mlx	*mlx;
-
-	mlx = (t_mlx *)param;
 	if (keycode == 65307)
 		return (esc_press(keycode, param));
 	else if (keycode == 65361 || keycode == 65362 || keycode == 65363
