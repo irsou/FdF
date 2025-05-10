@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isousa-s <isousa-s@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: isousa-s <isousa-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 18:01:16 by isousa-s          #+#    #+#             */
-/*   Updated: 2025/03/23 17:49:04 by isousa-s         ###   ########.fr       */
+/*   Updated: 2025/05/10 20:07:12 by isousa-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,11 @@ static char	*read_and_join(int fd, char *storage, char *buffer)
 		}
 		buffer[bytes_read] = '\0';
 		if (bytes_read > 0)
+		{
 			storage = ft_strjoin(storage, buffer);
+			free(storage);
+		}
+
 		if (!storage)
 		{
 			return (NULL);
@@ -117,5 +121,10 @@ char	*get_next_line(int fd)
 		return (NULL);
 	line = get_line(storage);
 	storage = update_storage(storage);
+	if (!storage)
+	{
+		free(storage);
+		storage = NULL;
+	}
 	return (line);
 }

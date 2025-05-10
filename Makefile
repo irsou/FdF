@@ -27,7 +27,7 @@ OBJ = $(SRC:.c=.o)
 
 CC = cc
 # FLAGS = -Wall -Werror -Wextra
-FLAGS = -Wall -Werror -Wextra -g -fsanitize=address
+FLAGS = -Wall -Werror -Wextra
 RM = rm -f
 AR = ar rcs
 LIBFT_DIR = libft
